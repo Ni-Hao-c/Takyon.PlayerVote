@@ -7,6 +7,9 @@ bool balanceAtMapEnd = false
 float balanceVotePercentage = 0.5 // percentage of how many people on the server need to have voted
 array<string> playerBalanceVoteNames = [] // list of players who have voted, is used to see how many have voted
 
+// modified
+bool balanceTitanDamageBased
+
 struct PlayerKDData{
     entity player
     float kd
@@ -22,6 +25,9 @@ void function BalanceInit(){
     balanceEnabled = GetConVarBool( "pv_balance_enabled" )
     balanceVotePercentage = GetConVarFloat( "pv_balance_percentage" )
     balanceAtMapEnd = GetConVarBool("pv_balance_at_map_end") // add callback if convar set for shuffle at end of map
+
+    // modified
+    balanceTitanDamageBased = GetConVarBool( "pv_titandamage_balance" )
 }
 
 /*
@@ -87,7 +93,10 @@ void function CheckIfEnoughBalanceVotes(bool force = false){
         Balance(_players)
         // message everyone
         for(int i = 0; i < GetPlayerArray().len(); i++){
-            SendHudMessageBuilder(GetPlayerArray()[i], BALANCED, 255, 200, 200)
+            if ( balanceTitanDamageBased )
+                SendHudMessageBuilder(GetPlayerArray()[i], BALANCED_TITANDAMAGE, 255, 200, 200)
+            else            
+                SendHudMessageBuilder(GetPlayerArray()[i], BALANCED, 255, 200, 200)
         }
         playerBalanceVoteNames.clear()
     }
@@ -103,6 +112,8 @@ void function BalanceMapEnd() {
 void function Balance(array<entity> _players){
     // sort players based on kd
     array<PlayerKDData> playerRanks = GetPlayersSortedBySkill(_players)
+     if ( balanceTitanDamageBased )
+        playerRanks = GetPlayersSortedByTitanDamage(_players)
 
     for(int i = 0; i < GetPlayerArray().len(); i++){
         if(!IsEven(i))
@@ -124,6 +135,25 @@ array<PlayerKDData> function GetPlayersSortedBySkill(array<entity> arr){
         }
         else{
             temp.kd =  1.0 * player.GetPlayerGameStat(PGS_KILLS) / player.GetPlayerGameStat(PGS_DEATHS)
+        }
+        pkdArr.append(temp)
+    }
+    pkdArr.sort(PlayerKDDataSort)
+    return pkdArr
+}
+
+// modified function
+array<PlayerKDData> function GetPlayersSortedByTitanDamage(array<entity> arr){
+    array<PlayerKDData> pkdArr
+    foreach (entity player in arr) {
+        PlayerKDData temp
+        temp.player = player
+        int deaths =  player.GetPlayerGameStat(PGS_DEATHS)
+        if(deaths == 0){
+            temp.kd = 1.0 * player.GetPlayerGameStat(PGS_ASSAULT_SCORE)
+        }
+        else{
+            temp.kd =  1.0 * player.GetPlayerGameStat(PGS_ASSAULT_SCORE) / player.GetPlayerGameStat(PGS_DEATHS)
         }
         pkdArr.append(temp)
     }
