@@ -1,3 +1,38 @@
+# Forked Repo by VoyageDB
+
+## 简体中文 README
+
+修改为简体中文本地化(原作者：ReimuYakumo)
+
+### 修改：
+
+- 将`pv_discord`更改为`pv_group`
+
+- 当无人进行地图投票时，地图将会按照`pv_maps`顺序轮换而非随机
+
+### 新功能：
+
+| **变量名**                      | **简介**                                                                                                                                         | **默认值**                                           | **可接收值** |
+|:-------------------------------:|:------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------:|:------------------:|
+| `pv_titandamage_balance`        | 将自动分队机制由K/D比改为按照单次泰坦伤害分队                                     | `"0"`                                                | 0-1   |
+
+## ENGLISH README
+
+Change to use Simplified Chinese Localization(Translated by: ReimuYakumo)
+
+### Changes
+
+- Change`pv_discord` to `pv_group`
+
+- If nobody votes map, map rotation will go through `pv_maps` list instead of picking a random one
+
+### New Features
+| **Name**                        | **Description**                                                                                                                            | **Default value**                                    | **Accepted Value** |
+|:-------------------------------:|:------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------:|:------------------:|
+| `pv_titandamage_balance`        | Change team balance logic to "Based on titan damage per life"                                 | `"0"`                                                | 0-1   |
+
+
+
 # PlayerVote
 
 Enables players to vote on different things like skipping a map or kicking a player, to add a true community feeling to your server! Also includes admin functionalities to enforce some rules.  
