@@ -10,7 +10,7 @@ global array<string> welcomeSpawnedPlayers = []
 string serverName = ""
 
 //Add your discord server link or website in mod.json
-string discordLink = "discord.gg/northstar"
+string discordLink = "kaihei.co/wsZVnX"
 
 // TODO maybe make convar
 string welcomeMsg = ""
@@ -20,15 +20,14 @@ void function WelcomeInit(){
     welcomeEnabled = GetConVarBool( "pv_welcome_enabled" )
     serverName = GetConVarString( "pv_servername" )
 
-    if(GetConVarString( "pv_discord" ) != "" && GetConVarString( "pv_discord" ) != "YOUR DISCORD"){
-        discordLink = GetConVarString("pv_discord")
+    if(GetConVarString( "pv_group" ) != "" && GetConVarString( "pv_group" ) != "YOUR DISCORD"){
+        discordLink = GetConVarString("pv_group")
     }
     // change your welcome msg here
-    welcomeMsg =    "Welcome %playername%!\n" + // leave %playername% so the msg is personalized
-                    "You're now playing on " + serverName + "\n"+
-                    "Join us at karma-gaming.net/go/discord\n" + // add your discord or website
-                    "Check out r/kraber9k for a tutorial\n" + // add your discord or website
-                    "Type !help in chat"
+    welcomeMsg =    "%playername% 欢迎您！\n" + // leave %playername% so the msg is personalized
+                    "您现在正在 " + serverName + "中进行游玩\n"+
+                    "交流群：" + discordLink + "\n" + // add your discord or website
+                    "如服务器启用了 -enablechathooks ，那您可以在聊天框输入 !help 获取帮助，否则请在控制台(~)中输入指令" // add -enablechathooks to \Titanfall2\ns_startup_args_dedi.txt
 }
 
 /*

@@ -10,22 +10,22 @@ global struct Command{
 global array<Command> commandArr
 
 void function CommandsInit(){
-    commandArr.append(new_CommandStruct(["skip", "rtv"],                false, "!skip -> to skip the map", CommandSkip))
-    commandArr.append(new_CommandStruct(["extend", "elongate", "ext"],  false, "!extend -> to play this map longer", CommandExtend)) // elongate is for Sye <3
-    commandArr.append(new_CommandStruct(["kick"],                       false, "!kick -> to kick a player", CommandKick))
-    commandArr.append(new_CommandStruct(["yes"],                        true, "!yes -> vote to kick a player", CommandYes))
-    commandArr.append(new_CommandStruct(["no"],                         true, "!no -> vote to not kick a player", CommandNo))
-    commandArr.append(new_CommandStruct(["switch"],                     false, "!switch -> to switch teams", CommandSwitch))
-    commandArr.append(new_CommandStruct(["help"],                       false, "", CommandHelp))
-    commandArr.append(new_CommandStruct(["discord", "dc"],              false, "!discord -> to display the link to the discord server", CommandDiscord))
-    commandArr.append(new_CommandStruct(["getuid", "gu"],               true, "!getuid name -> get the UID of a player", CommandGetUid))
-    commandArr.append(new_CommandStruct(["ping"],                       true, "!ping (name) -> get your or a player's ping", CommandPing))
-    commandArr.append(new_CommandStruct(["balance", "bal"],             false, "!balance -> vote to balance teams by kd", CommandBalance))
-    commandArr.append(new_CommandStruct(["rules"],                      false, "!rules -> get the server's rules", CommandRules))
-    commandArr.append(new_CommandStruct(["sendrules", "sr"],            true, "!sr -> send the rules to a player", CommandSendRules))
-    commandArr.append(new_CommandStruct(["msg", "message"],             true, "!msg -> !msg player message", CommandMsg))
-    commandArr.append(new_CommandStruct(["announce", "ann"],            true, "!announce -> !announce message", CommandAnnounce))
-    commandArr.append(new_CommandStruct(["vote", "maps"],               false, "!vote -> !vote [number] to vote for the next map", CommandVote))
+    commandArr.append(new_CommandStruct(["skip", "rtv","!skip", "!rtv"],                               false, "!skip -> 跳过当前游玩的地图", CommandSkip))
+    commandArr.append(new_CommandStruct(["extend", "elongate", "ext","!extend", "!elongate", "!ext"],  false, "!extend -> 延长当前地图的游玩时间", CommandExtend)) // elongate is for Sye <3
+    commandArr.append(new_CommandStruct(["kick","!kick"],                                              false, "!kick -> 移出某位玩家", CommandKick))
+    commandArr.append(new_CommandStruct(["yes","!yes"],                                                true, "!yes -> 赞成对玩家的移出动议", CommandYes))
+    commandArr.append(new_CommandStruct(["no","!no"],                                                  true, "!no -> 否定对玩家的移出动议", CommandNo))
+    commandArr.append(new_CommandStruct(["switch","!switch"],                                          false, "!switch -> 切换您的队伍", CommandSwitch))
+    commandArr.append(new_CommandStruct(["help"],                                                      false, "", CommandHelp))
+    commandArr.append(new_CommandStruct(["discord", "dc"],                                             false, "!discord -> to display the link to the discord server", CommandDiscord))
+    commandArr.append(new_CommandStruct(["getuid", "gu","!getuid", "!gu"],                             true, "!getuid name -> [特权命令] 获取某位玩家的Uid", CommandGetUid))
+    commandArr.append(new_CommandStruct(["ping","!ping"],                                              true, "!ping (name) -> 获取您或者某位玩家的延迟", CommandPing))
+    commandArr.append(new_CommandStruct(["balance", "bal","!balance", "!bal"],                         false, "!balance -> 投票以使用 K/D 平衡队伍", CommandBalance))
+    commandArr.append(new_CommandStruct(["rules","!rules"],                                            false, "!rules -> 获取服务器规则", CommandRules))
+    commandArr.append(new_CommandStruct(["sendrules", "sr","!sendrules", "!sr"],                       true, "!sr -> [特权命令] 将规则发送至某位玩家", CommandSendRules))
+    commandArr.append(new_CommandStruct(["msg", "message","!msg", "!message"],                         true, "!msg -> !msg player message", CommandMsg))
+    commandArr.append(new_CommandStruct(["announce", "ann","announce", "ann"],                         true, "!announce -> !announce message", CommandAnnounce))
+    commandArr.append(new_CommandStruct(["vote", "maps","vote", "maps"],                               false, "!vote -> !vote [地图序号] 选出下一张地图", CommandVote))
 }
 
 /*

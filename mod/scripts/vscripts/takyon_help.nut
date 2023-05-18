@@ -30,7 +30,7 @@ void function HelpInit(){
     // ConVar
     helpEnabled = GetConVarBool( "pv_help_enabled" )
     displayHintOnSpawnAmount = GetConVarInt( "pv_display_hint_on_spawn_amount" )
-    discordLink = GetConVarString( "pv_discord" )
+    discordLink = GetConVarString( "pv_group" )
 }
 
 /*

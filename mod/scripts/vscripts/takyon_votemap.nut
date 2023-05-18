@@ -1,5 +1,5 @@
 global function VoteMapInit
-global function FillProposedMaps
+global function FillProposedMaps 
 global function CommandVote
 global function OnPlayerSpawnedMap
 global function OnPlayerDisconnectedMap
@@ -26,29 +26,29 @@ global float mapsProposalTimeLeft = 0
 
 // do not remove maps from here, just add the ones you need!
 table<string, string> mapNameTable = {
-    mp_angel_city = "Angel City",
-    mp_black_water_canal = "Black Water Canal",
-    mp_coliseum = "Coliseum",
-    mp_coliseum_column = "Pillars",
-    mp_colony02 = "Colony",
-    mp_complex3 = "Complex",
-    mp_crashsite3 = "Crashsite",
-    mp_drydock = "Drydock",
-    mp_eden = "Eden",
-    mp_forwardbase_kodai = "Forwardbase Kodai",
-    mp_glitch = "Glitch",
-    mp_grave = "Boomtown",
-    mp_homestead = "Homestead",
-    mp_lf_deck = "Deck",
-    mp_lf_meadow = "Meadow",
-    mp_lf_stacks = "Stacks",
-    mp_lf_township = "Township",
-    mp_lf_traffic = "Traffic",
+    mp_angel_city = "天使城",
+    mp_black_water_canal = "黑水运河",
+    mp_coliseum = "竞技场",
+    mp_coliseum_column = "梁柱",
+    mp_colony02 = "殖民地",
+    mp_complex3 = "综合设施",
+    mp_crashsite3 = "坠机现场",
+    mp_drydock = "干坞",
+    mp_eden = "伊甸",
+    mp_forwardbase_kodai = "虎大前进基地",
+    mp_glitch = "异常",
+    mp_grave = "新兴城镇",
+    mp_homestead = "家园",
+    mp_lf_deck = "甲板",
+    mp_lf_meadow = "草原",
+    mp_lf_stacks = "堆积地",
+    mp_lf_township = "城镇",
+    mp_lf_traffic = "交通",
     mp_lf_uma = "UMA",
-    mp_relic02 = "Relic",
-    mp_rise = "Rise",
-    mp_thaw = "Exoplanet",
-    mp_wargames = "Wargames"
+    mp_relic02 = "遗迹",
+    mp_rise = "崛起",
+    mp_thaw = "系外行星",
+    mp_wargames = "战争游戏"
 }
 
 void function VoteMapInit(){
@@ -65,7 +65,10 @@ void function VoteMapInit(){
 
     array<string> dirtyMaps = split( cvar, "," )
     foreach ( string map in dirtyMaps )
+    {
         if (map != GetMapName() || dirtyMaps.len() == 1) maps.append(strip(map)) // Only add map if it is not the current map
+                maps.append(strip(map))
+    }
 }
 
 /*
@@ -143,6 +146,7 @@ bool function CommandVote(entity player, array<string> args){
 
             for(int i = 0; i < GetPlayerArray().len(); i++){
                 SendHudMessageBuilder(GetPlayerArray()[i], ADMIN_VOTED_MAP, 255, 200, 200)
+                Chat_ServerPrivateMessage(player, "\x1b[38;2;220;0;0m" + ADMIN_VOTED_MAP, false)
             }
             SetNextMap(args[0].tointeger(), true)
             return true
@@ -196,7 +200,15 @@ void function ChangeMapBeforeServer(){
     if(nextMap != "")
         GameRules_ChangeMap(nextMap, GameRules_GetGameMode())
     else
-        GameRules_ChangeMap(maps[rndint(maps.len())], GameRules_GetGameMode())
+    {
+        int mapIndex = maps.find( GetMapName() )
+        mapIndex += 1 // next map index, or if the map is not in playlist, this will change to first map
+        if( mapIndex == maps.len() ) // reached last map?
+            mapIndex = 0
+        string map = maps[mapIndex]
+        
+        GameRules_ChangeMap(map, GameRules_GetGameMode())
+    }
 }
 
 /*
@@ -236,20 +248,24 @@ void function ShowProposedMaps(entity player){
 }
 
 void function FillProposedMaps(){
-    if (mapsHaveBeenProposed) return; // Do not run again if maps have already been proposed
+    if (mapsHaveBeenProposed) return // Do not run again if maps have already been proposed
     printl("Proposing maps")
     if(howManyMapsToPropose >= maps.len()){
         printl("\n\n[PLAYERVOTE][ERROR] pv_map_map_propose_amount is not lower than pv_maps! Set it to a lower number than the amount of maps in your map pool!\n\n")
         howManyMapsToPropose = maps.len()-1
     }
 
+    string currMap = GetMapName()
     for(int i = 0; i < howManyMapsToPropose; i++){
         while(true){
             // get a random map from maps
             string temp = maps[rndint(maps.len())]
             if(proposedMaps.find(temp) == -1){
-                proposedMaps.append(temp)
-                break
+                string temp = maps[rndint(maps.len() - 1)]
+                if(proposedMaps.find(temp) == -1 && temp != currMap){
+                    proposedMaps.append(temp)
+                    break
+                }
             }
         }
     }
@@ -258,7 +274,7 @@ void function FillProposedMaps(){
     foreach(entity player in GetPlayerArray()){
         ShowProposedMaps(player)
     }
-
+    
     mapsProposalTimeLeft = Time()
     mapsHaveBeenProposed = true
 }
@@ -295,7 +311,7 @@ int function FindMvdInVoteData(string mapName){ // returns -1 if not found
         index++
         if(mvd.mapName == mapName) return index
     }
-    return -1
+    return index
 }
 
 int function MapVotesSort(MapVotesData data1, MapVotesData data2)
