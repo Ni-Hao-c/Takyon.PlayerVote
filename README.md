@@ -2,7 +2,7 @@
 
 ## 简体中文 README
 
-修改为简体中文本地化(原作者：ReimuYakumo)
+修改为简体中文本地化(原作者：[ReimuYakumo](https://github.com/cvb011))
 
 ### 修改：
 
@@ -20,7 +20,7 @@
 
 ## ENGLISH README
 
-Change to use Simplified Chinese Localization(Translated by: ReimuYakumo)
+Change to use Simplified Chinese Localization(Translated by: https://github.com/cvb011)
 
 ### Changes
 
