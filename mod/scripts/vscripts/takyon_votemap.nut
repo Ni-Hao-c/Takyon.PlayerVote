@@ -66,8 +66,8 @@ void function VoteMapInit(){
     array<string> dirtyMaps = split( cvar, "," )
     foreach ( string map in dirtyMaps )
     {
-        if (map != GetMapName() || dirtyMaps.len() == 1) maps.append(strip(map)) // Only add map if it is not the current map
-                maps.append(strip(map))
+        if ( map != GetMapName() && !maps.contains( map ) ) // Only add map if it is not the current map, also don't append multiple times for each map
+            maps.append( map )
     }
 }
 
@@ -259,7 +259,7 @@ void function FillProposedMaps(){
     for(int i = 0; i < howManyMapsToPropose; i++){
         while(true){
             // get a random map from maps
-            string temp = maps[rndint(maps.len())]
+            string temp = maps[rndint(maps.len() - 1)]
             if(proposedMaps.find(temp) == -1){
                 string temp = maps[rndint(maps.len() - 1)]
                 if(proposedMaps.find(temp) == -1 && temp != currMap){
