@@ -70,4 +70,5 @@ global const string ADMIN_VOTED_MAP = "管理员将下一张地图设置为了 "
 global const string MAP_NOT_GIVEN = "没有给定地图"
 global const string MAP_NUMBER_NOT_FOUND = "该序号没有对应地图"
 global const string MAP_YOU_VOTED = "您投票给了 " // remember the space at the end
+global const string MAP_VOTE_HEADER = "投票換圖" // have to be traditional chinese to fit game font!
 global const string MAP_VOTE_USAGE_PROPOSED = "在聊天框输入 !vote 地图数字 以进行投票。\x1b[38;2;0;220;220m(例：!vote 2)"

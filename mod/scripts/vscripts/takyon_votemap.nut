@@ -26,29 +26,29 @@ global float mapsProposalTimeLeft = 0
 
 // do not remove maps from here, just add the ones you need!
 table<string, string> mapNameTable = {
-    mp_angel_city = "天使城",
-    mp_black_water_canal = "黑水运河",
-    mp_coliseum = "竞技场",
-    mp_coliseum_column = "梁柱",
-    mp_colony02 = "殖民地",
-    mp_complex3 = "综合设施",
-    mp_crashsite3 = "坠机现场",
-    mp_drydock = "干坞",
-    mp_eden = "伊甸",
-    mp_forwardbase_kodai = "虎大前进基地",
-    mp_glitch = "异常",
-    mp_grave = "新兴城镇",
-    mp_homestead = "家园",
-    mp_lf_deck = "甲板",
-    mp_lf_meadow = "草原",
-    mp_lf_stacks = "堆积地",
-    mp_lf_township = "城镇",
-    mp_lf_traffic = "交通",
-    mp_lf_uma = "UMA",
-    mp_relic02 = "遗迹",
-    mp_rise = "崛起",
-    mp_thaw = "系外行星",
-    mp_wargames = "战争游戏"
+    ["mp_angel_city"] = "天使城",
+    ["mp_black_water_canal"] = "黑水運河",
+    ["mp_coliseum"] = "競技場",
+    ["mp_coliseum_column"] = "梁柱",
+    ["mp_colony02"] = "殖民地",
+    ["mp_complex3"] = "綜合設施",
+    ["mp_crashsite3"] = "墜機現場",
+    ["mp_drydock"] = "乾塢",
+    ["mp_eden"] = "伊甸",
+    ["mp_forwardbase_kodai"] = "虎大前進基地",
+    ["mp_glitch"] = "異常",
+    ["mp_grave"] = "新興城鎮",
+    ["mp_homestead"] = "家園",
+    ["mp_lf_deck"] = "甲板",
+    ["mp_lf_meadow"] = "草原",
+    ["mp_lf_stacks"] = "堆積地",
+    ["mp_lf_township"] = "城鎮",
+    ["mp_lf_traffic"] = "交通",
+    ["mp_lf_uma"] = "UMA",
+    ["mp_relic02"] = "遺跡",
+    ["mp_rise"] = "崛起",
+    ["mp_thaw"] = "係外行星",
+    ["mp_wargames"] = "戰爭游戲"
 }
 
 void function VoteMapInit(){
@@ -164,7 +164,9 @@ bool function CommandVote(entity player, array<string> args){
         }
     }
 
-    SendHudMessageBuilder(player, MAP_YOU_VOTED + TryGetNormalizedMapName(proposedMaps[args[0].tointeger()-1]), 200, 200, 200)
+    string voteMessage = MAP_YOU_VOTED + TryGetNormalizedMapName(proposedMaps[args[0].tointeger()-1])
+    SendHudMessageBuilder(player, voteMessage, 200, 200, 200)
+    Chat_ServerPrivateMessage(player, "\x1b[38;2;220;0;0m" + voteMessage, false)
     SetNextMap(args[0].tointeger())
     return true
 }
@@ -216,14 +218,11 @@ void function ChangeMapBeforeServer(){
  */
 
 string function TryGetNormalizedMapName(string mapName){
-    try{
+    if ( mapName in mapNameTable )
         return mapNameTable[mapName]
-    }
-    catch(e){
-        // name not normalized, should be added to list lol (make a pr with the mapname if i missed sumn :P)
-        printl(e)
-        return mapName
-    }
+
+    // name not normalized, should be added to list lol (make a pr with the mapname if i missed sumn :P)
+    return mapName
 }
 
 bool function IsMapNumValid(string x){
@@ -236,14 +235,11 @@ bool function IsMapNumValid(string x){
 
 void function ShowProposedMaps(entity player){
     // create message
-    string message = MAP_VOTE_USAGE + "\n"
-    for (int i = 1; i <= proposedMaps.len(); i++) {
-        string map = TryGetNormalizedMapName(proposedMaps[i-1])
-        message += i + ": " + map + "\n"
-    }
-
+    array<string> localizedMsg
+    foreach ( string map in proposedMaps )
+        localizedMsg.append( TryGetNormalizedMapName( map ) )
     // message player
-    SendHudMessage( player, message, -0.925, 0.4, 255, 255, 255, 255, 0.15, 30, 1 )
+    NSCreatePollOnPlayer( player, MAP_VOTE_HEADER, localizedMsg, 30.0 )
     Chat_ServerBroadcast("\x1b[38;2;220;220;0m[PlayerVote] \x1b[0m" + MAP_VOTE_USAGE_PROPOSED)
 }
 
