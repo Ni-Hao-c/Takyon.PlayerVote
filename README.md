@@ -14,7 +14,7 @@
 
 | **变量名**                      | **简介**                                                                                                                                         | **默认值**                                           | **可接收值** |
 |:-------------------------------:|:------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------:|:------------------:|
-| `pv_titandamage_balance`        | 将自动分队机制由K/D比改为按照单次泰坦伤害分队                                     | `"0"`                                                | 0-1   |
+| `pv_titandamage_balance`        | 将自动分队机制由K/D比改为按照单次泰坦伤害分队                                     | `0`                                                  | 0-1   |
 
 ## ENGLISH README
 
@@ -29,7 +29,7 @@ Change to use Simplified Chinese Localization(Translated by: ReimuYakumo)
 ### New Features
 | **Name**                        | **Description**                                                                                                                            | **Default value**                                    | **Accepted Value** |
 |:-------------------------------:|:------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------:|:------------------:|
-| `pv_titandamage_balance`        | Change team balance logic to "Based on titan damage per life"                                 | `"0"`                                                | 0-1   |
+| `pv_titandamage_balance`        | Change team balance logic to "Based on titan damage per life"                                 | `0`                                                   | 0-1   |
 
 
 
