@@ -68,14 +68,14 @@ void function VoteMapInit(){
     foreach ( string map in dirtyMaps )
     {
         if ( map != GetMapName() && !maps.contains( map ) ) // Only add map if it is not the current map, also don't append multiple times for each map
-            maps.append( map )
+            maps.append( StringReplace( map, " ", "" ) ) // avoid unexpected white spaces mess up list
     }
 
     // modified: map rotation
     foreach ( string map in dirtyMaps )
     {
         if ( !rotationMaps.contains( map ) )
-            rotationMaps.append( map )
+            rotationMaps.append( StringReplace( map, " ", "" ) )
     }
 }
 
