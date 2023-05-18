@@ -2,7 +2,7 @@
 
 ## 简体中文 README
 
-修改为简体中文本地化(原作者：[ReimuYakumo](https://github.com/cvb011))
+修改为简体中文本地化(翻译：[ReimuYakumo](https://github.com/cvb011))
 
 ### 修改：
 
