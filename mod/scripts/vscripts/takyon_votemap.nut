@@ -18,6 +18,7 @@ struct MapVotesData{
 
 global bool mapsHaveBeenProposed = false // dont fuck with this
 array<string> maps = []
+array<string> rotationMaps = [] // different with maps, this will keep current map in list
 array<MapVotesData> voteData = []
 array<string> proposedMaps = []
 string nextMap = ""
@@ -68,6 +69,13 @@ void function VoteMapInit(){
     {
         if ( map != GetMapName() && !maps.contains( map ) ) // Only add map if it is not the current map, also don't append multiple times for each map
             maps.append( map )
+    }
+
+    // modified: map rotation
+    foreach ( string map in dirtyMaps )
+    {
+        if ( !rotationMaps.contains( map ) )
+            rotationMaps.append( map )
     }
 }
 
@@ -203,12 +211,12 @@ void function ChangeMapBeforeServer(){
         GameRules_ChangeMap(nextMap, GameRules_GetGameMode())
     else
     {
-        int mapIndex = maps.find( GetMapName() )
+        int mapIndex = rotationMaps.find( GetMapName() )
         mapIndex += 1 // next map index, or if the map is not in playlist, this will change to first map
-        if( mapIndex == maps.len() ) // reached last map?
+        if( mapIndex == rotationMaps.len() ) // reached last map?
             mapIndex = 0
-        string map = maps[mapIndex]
-        
+        string map = rotationMaps[mapIndex]
+
         GameRules_ChangeMap(map, GameRules_GetGameMode())
     }
 }
