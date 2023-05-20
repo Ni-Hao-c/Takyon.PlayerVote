@@ -25,6 +25,11 @@ string nextMap = ""
 array<string> spawnedPlayers= []
 global float mapsProposalTimeLeft = 0
 
+struct
+{
+    table<entity, bool> playerReceivedMapList
+} file
+
 // do not remove maps from here, just add the ones you need!
 table<string, string> mapNameTable = {
     ["mp_angel_city"] = "天使城",
@@ -242,6 +247,9 @@ bool function IsMapNumValid(string x){
 }
 
 void function ShowProposedMaps(entity player){
+    // prevent overloop too much
+    if ( player in file.playerReceivedMapList )
+        return
     // create message
     array<string> localizedMsg
     foreach ( string map in proposedMaps )
@@ -249,6 +257,9 @@ void function ShowProposedMaps(entity player){
     // message player
     NSCreatePollOnPlayer( player, MAP_VOTE_HEADER, localizedMsg, 30.0 )
     Chat_ServerBroadcast("\x1b[38;2;220;220;0m[PlayerVote] \x1b[0m" + MAP_VOTE_USAGE_PROPOSED)
+
+    // mark as player got message
+    file.playerReceivedMapList[ player ] <- true
 }
 
 void function FillProposedMaps(){
