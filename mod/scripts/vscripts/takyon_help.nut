@@ -14,7 +14,7 @@ bool useGeneratedHelp = true // will auto-generate text for the help command. se
 array<string> spawnedPlayers = []
 array<string> cmdArr = []
 
-string commands =   "[ !skip, !extend, !kick, !rules, !switch, !balance, !ping, !vote ]"
+string commands =   "可查询命令：[ !skip, !extend, !kick, !rules, !switch, !balance, !ping, !vote ]"
 
 void function HelpInit(){
     // add commands here. i added some varieants for accidents, however not for brain damage. do whatever :P
@@ -49,11 +49,13 @@ bool function CommandHelp(entity player, array<string> args){
             for(int i = 0; i < commandArr.len(); i++){
                 if(commandArr[i].names.contains(args[0])){
                     SendHudMessageBuilder(player, commandArr[i].usage, 255, 255, 255)
+                    Chat_ServerPrivateMessage(player, commandArr[i].usage, false)
                     return true
                 }
             }
         }
         SendHudMessageBuilder(player, commands, 255, 255, 255)
+        Chat_ServerPrivateMessage(player, commands, false)
     }
     return true
 }

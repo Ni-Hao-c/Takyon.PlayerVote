@@ -17,6 +17,7 @@ void function PlayerVoteInit(){
     AddCallback_GameStateEnter(eGameState.Playing, Playing)
     AddCallback_GameStateEnter(eGameState.Postmatch, Postmatch)
 
+    AddCallback_OnClientConnected( OnClientConnected )
     AddCallback_OnPlayerRespawned(OnPlayerSpawned)
     AddCallback_OnClientDisconnected(OnPlayerDisconnected)
 
@@ -64,6 +65,11 @@ ClServer_MessageStruct function ChatCallback(ClServer_MessageStruct message) {
 /*
  *  HELPER FUNCTIONS
  */
+
+void function OnClientConnected( entity player )
+{
+    ShowChatWelcomeMessage(player)
+}
 
 void function OnPlayerSpawned(entity player){
     printl("[PV] Triggered OnPlayerSpawned")

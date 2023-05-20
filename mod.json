@@ -16,7 +16,7 @@
 		},
 		{
 			"Name": "pv_group",
-			"DefaultValue": "YOUR QQ GROUP NUM" // change this to your discord server. leave empty to disable !discord 
+			"DefaultValue": "YOUR QQGROUP NUM" // change this to your discord server. leave empty to disable !discord 
 		},
 		{
 			"Name": "pv_display_hint_on_spawn_amount",
