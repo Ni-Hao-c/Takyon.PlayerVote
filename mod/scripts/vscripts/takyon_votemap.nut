@@ -122,13 +122,13 @@ bool function CommandVote(entity player, array<string> args){
 
         // check if voting is enabled
         if(!voteMapEnabled){
-            Chat_ServerPrivateMessage(player, "\x1b[38;2;220;0;0m" + COMMAND_DISABLED, false)
+            Chat_ServerPrivateMessage(player, "\x1b[38;2;220;0;0m[PlayerVote] \x1b[0m" + COMMAND_DISABLED, false, false)
             return false
         }
 
         // check if the maps have been proposed
         if(!mapsHaveBeenProposed){
-            Chat_ServerPrivateMessage(player, "\x1b[38;2;220;0;0m" + MAPS_NOT_PROPOSED, false)
+            Chat_ServerPrivateMessage(player, "\x1b[38;2;220;0;0m[PlayerVote] \x1b[0m" + MAPS_NOT_PROPOSED, false, false)
             return false
         }
 
@@ -140,26 +140,26 @@ bool function CommandVote(entity player, array<string> args){
 
         // map num not a num
         if(args.len() < 1 || !IsInt(args[0])){
-            Chat_ServerPrivateMessage(player, "\x1b[38;2;220;0;0m" + MAP_VOTE_USAGE, false)
+            Chat_ServerPrivateMessage(player, "\x1b[38;2;220;0;0m[PlayerVote] \x1b[0m" + MAP_VOTE_USAGE, false, false)
             return false
         }
 
         // check if num is valid
         if(!IsMapNumValid(args[0])){
-            Chat_ServerPrivateMessage(player, "\x1b[38;2;220;0;0m" + MAP_NUMBER_NOT_FOUND, false)
+            Chat_ServerPrivateMessage(player, "\x1b[38;2;220;0;0m[PlayerVote] \x1b[0m" + MAP_NUMBER_NOT_FOUND, false, false)
             return false
         }
 
         if(args.len() == 2 && args[1] == "force"){
             // Check if user is admin
             if(!IsPlayerAdmin(player)){
-                Chat_ServerPrivateMessage(player, "\x1b[38;2;220;0;0m" + MISSING_PRIVILEGES, false)
+                Chat_ServerPrivateMessage(player, "\x1b[38;2;220;0;0m[PlayerVote] \x1b[0m" + MISSING_PRIVILEGES, false, false)
                 return false
             }
 
             for(int i = 0; i < GetPlayerArray().len(); i++){
                 SendHudMessageBuilder(GetPlayerArray()[i], ADMIN_VOTED_MAP, 255, 200, 200)
-                Chat_ServerPrivateMessage(player, "\x1b[38;2;220;0;0m" + ADMIN_VOTED_MAP, false)
+                Chat_ServerPrivateMessage(player, "\x1b[38;2;220;0;0m[PlayerVote] \x1b[0m" + ADMIN_VOTED_MAP, false, false)
             }
             SetNextMap(args[0].tointeger(), true)
             return true
@@ -172,14 +172,14 @@ bool function CommandVote(entity player, array<string> args){
         }
         else {
             // Doesnt let the player vote twice, name is saved so even on reconnect they cannot vote twice
-            Chat_ServerPrivateMessage(player, "\x1b[38;2;220;0;0m" + ALREADY_VOTED, false)
+            Chat_ServerPrivateMessage(player, "\x1b[38;2;220;0;0m[PlayerVote] \x1b[0m" + ALREADY_VOTED, false, false)
             return false
         }
     }
 
     string voteMessage = MAP_YOU_VOTED + TryGetNormalizedMapName(proposedMaps[args[0].tointeger()-1])
     SendHudMessageBuilder(player, voteMessage, 200, 200, 200)
-    Chat_ServerPrivateMessage(player, "\x1b[38;2;220;0;0m" + voteMessage, false)
+    Chat_ServerPrivateMessage(player, "\x1b[38;2;220;0;0m[PlayerVote] \x1b[0m" + voteMessage, false, false)
     SetNextMap(args[0].tointeger())
     return true
 }
@@ -256,7 +256,7 @@ void function ShowProposedMaps(entity player){
         localizedMsg.append( TryGetNormalizedMapName( map ) )
     // message player
     NSCreatePollOnPlayer( player, MAP_VOTE_HEADER, localizedMsg, 30.0 )
-    Chat_ServerBroadcast("\x1b[38;2;220;220;0m[PlayerVote] \x1b[0m" + MAP_VOTE_USAGE_PROPOSED)
+    Chat_ServerPrivateMessage(player, "\x1b[38;2;220;0;0m[PlayerVote] \x1b[0m" + MAP_VOTE_USAGE_PROPOSED, false, false)
 
     // mark as player got message
     file.playerReceivedMapList[ player ] <- true

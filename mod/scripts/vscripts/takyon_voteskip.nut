@@ -35,12 +35,13 @@ bool function CommandSkip(entity player, array<string> args){
         if(args.len() == 1 && args[0] == "force"){
             // Check if user is admin
             if(!IsPlayerAdmin(player)){
-                Chat_ServerPrivateMessage(player, "\x1b[38;2;220;0;0m" + MISSING_PRIVILEGES,false)
+                Chat_ServerPrivateMessage(player, "\x1b[38;2;220;0;0m[PlayerVote] \x1b[0m" + MISSING_PRIVILEGES, false, false)
                 return false
             }
 
             for(int i = 0; i < GetPlayerArray().len(); i++){
                 SendHudMessageBuilder(GetPlayerArray()[i], ADMIN_SKIPPED, 255, 200, 200)
+                Chat_ServerPrivateMessage(player, "\x1b[38;2;220;0;0m[PlayerVote] \x1b[0m" + ADMIN_SKIPPED, false, false)
             }
             CheckIfEnoughSkipVotes(true)
             return true
@@ -49,6 +50,7 @@ bool function CommandSkip(entity player, array<string> args){
         // check if skipping is enabled
         if(!skipEnabled){
             SendHudMessageBuilder(player, COMMAND_DISABLED, 255, 200, 200)
+            Chat_ServerPrivateMessage(player, "\x1b[38;2;220;0;0m[PlayerVote] \x1b[0m" + COMMAND_DISABLED, false, false)
             return false
         }
 
@@ -60,15 +62,22 @@ bool function CommandSkip(entity player, array<string> args){
             // send message to everyone
             for(int i = 0; i < GetPlayerArray().len(); i++){
                 if(playerSkipVoteNames.len() > 1) // semantics
+                {
                     SendHudMessageBuilder(GetPlayerArray()[i], playerSkipVoteNames.len() + MULTIPLE_SKIP_VOTES, 255, 200, 200)
+                    Chat_ServerPrivateMessage(player, "\x1b[38;2;220;0;0m[PlayerVote] \x1b[0m" + playerSkipVoteNames.len() + MULTIPLE_SKIP_VOTES, false, false)
+                }
                 else
+                {
                     SendHudMessageBuilder(GetPlayerArray()[i], playerSkipVoteNames.len() + ONE_SKIP_VOTE, 255, 200, 200)
+                    Chat_ServerPrivateMessage(player, "\x1b[38;2;220;0;0m[PlayerVote] \x1b[0m" + ONE_SKIP_VOTE, false, false)
+                }
 			}
         }
         else {
             // Doesnt let the player vote twice, name is saved so even on reconnect they cannot vote twice
             // Future update might check if the player is actually online but right now i am too tired
             SendHudMessageBuilder(player, ALREADY_VOTED, 255, 200, 200)
+            Chat_ServerPrivateMessage(player, "\x1b[38;2;220;0;0m[PlayerVote] \x1b[0m" + ALREADY_VOTED, false, false)
         }
     }
     CheckIfEnoughSkipVotes()

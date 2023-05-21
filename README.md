@@ -14,7 +14,7 @@
 
 - 将地图轮换池的显示改为ServerSideRUI，避免与使用`SendHudMessage()`的模组冲突
 
-- 欢迎信息和`!help`获取的信息将会同时显示在聊天框内
+- 欢迎消息和`!help`,`!vote`,`!skip`获取的信息将会同时显示在聊天框内
 
 | **变量名**                      | **描述**                                                                                                                                         | **默认值**                                           | **可接收值** |
 |:-------------------------------:|:------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------:|:------------------:|
@@ -34,7 +34,7 @@ Change to use Simplified Chinese Localization(Translated by: https://github.com/
 
 - Change map voting pool to ServerSideRUI，avoid conflicts that might happen with mods use `SendHudMessage()`
 
-- Welcome message and `!help` will also show in chat
+- Welcome message and `!help`,`!vote`,`!skip` will also show in chat
 
 | **Name**                        | **Description**                                                                                                                            | **Default value**                                    | **Accepted Value** |
 |:-------------------------------:|:------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------:|:------------------:|
