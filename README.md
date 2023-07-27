@@ -12,6 +12,8 @@
 
 - 通过`!switch`切换队伍后会被处死
 
+- 当`!switch`可用时，会在聊天框提示
+
 ### 新功能：
 
 - 将地图轮换池的显示改为ServerSideRUI，避免与使用`SendHudMessage()`的模组冲突
