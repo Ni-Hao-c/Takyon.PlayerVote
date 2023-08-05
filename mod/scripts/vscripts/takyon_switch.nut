@@ -224,7 +224,7 @@ bool function CanPlayerSwitch( entity player )
     if ( GetPlayerArray().len() == 1 )
 	{
     	Chat_ServerPrivateMessage( player, ANSI_COLOR_ERROR + "人数不足，不可切换队伍", false ) // chathook has been fucked up
-		return true
+		return false
 	}
 
     if ( player.isSpawning )
@@ -240,7 +240,7 @@ bool function CanPlayerSwitch( entity player )
         return false
     }
 
-    return false
+    return true
 }
 
 int function FindAllSwitches(entity player){
