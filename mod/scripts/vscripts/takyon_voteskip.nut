@@ -60,16 +60,17 @@ bool function CommandSkip(entity player, array<string> args){
             playerSkipVoteNames.append(player.GetPlayerName())
 
             // send message to everyone
-            for(int i = 0; i < GetPlayerArray().len(); i++){
+            foreach ( entity otherPlayer in GetPlayerArray() )
+            {
                 if(playerSkipVoteNames.len() > 1) // semantics
                 {
-                    SendHudMessageBuilder(GetPlayerArray()[i], playerSkipVoteNames.len() + MULTIPLE_SKIP_VOTES, 255, 200, 200)
-                    Chat_ServerPrivateMessage(player, "\x1b[38;2;220;0;0m[PlayerVote] \x1b[0m" + playerSkipVoteNames.len() + MULTIPLE_SKIP_VOTES, false, false)
+                    SendHudMessageBuilder(otherPlayer, playerSkipVoteNames.len() + MULTIPLE_SKIP_VOTES, 255, 200, 200)
+                    Chat_ServerPrivateMessage(otherPlayer, "\x1b[38;2;220;0;0m[PlayerVote] \x1b[0m" + playerSkipVoteNames.len() + MULTIPLE_SKIP_VOTES, false, false)
                 }
                 else
                 {
-                    SendHudMessageBuilder(GetPlayerArray()[i], playerSkipVoteNames.len() + ONE_SKIP_VOTE, 255, 200, 200)
-                    Chat_ServerPrivateMessage(player, "\x1b[38;2;220;0;0m[PlayerVote] \x1b[0m" + playerSkipVoteNames.len() + ONE_SKIP_VOTE, false, false)
+                    SendHudMessageBuilder(otherPlayer, playerSkipVoteNames.len() + ONE_SKIP_VOTE, 255, 200, 200)
+                    Chat_ServerPrivateMessage(otherPlayer, "\x1b[38;2;220;0;0m[PlayerVote] \x1b[0m" + playerSkipVoteNames.len() + ONE_SKIP_VOTE, false, false)
                 }
 			}
         }
