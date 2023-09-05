@@ -37,6 +37,7 @@ bool function CommandKick(entity player, array<string> args){
         
         // no player name given
         if(args.len() == 0){
+             GetName(player)//在控制台打印全部玩家名字， 便于玩家复制
             Chat_ServerPrivateMessage(player, "\x1b[38;2;220;0;0m" + NO_PLAYERNAME_FOUND, false)
             return false
         }
@@ -182,3 +183,8 @@ void function OnPlayerConnectedKick(entity player){
         // TODO mabye this for havin multiple votes?
     //}
 }*/
+void function GetName(entity player){
+foreach(entity p in GetPlayerArray()){
+    Chat_ServerPrivateMessage(player,  p.GetPlayerName(), true , false)
+}
+}
